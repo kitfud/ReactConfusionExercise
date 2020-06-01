@@ -22,7 +22,7 @@ function RenderDish({dish}){
 
 
 
-function RenderComments({comments}){  
+function RenderComments({comments,addComment, dishId}){  
 const rencomment = comments.map((info) => 
       
              <ol key={info.id}>
@@ -40,7 +40,7 @@ if(comments != null){
     return(
     <div>
      {rencomment} 
-    <CommentForm></CommentForm>    
+    <CommentForm dishId={dishId} addComment={addComment}></CommentForm>    
     </div>
    
     )
@@ -73,7 +73,9 @@ return(
             <RenderDish dish={props.dish} />
         </div>
         <div className="col-12 col-md-5 m-1">
-            <RenderComments comments={props.comments} />
+            <RenderComments comments={props.comments} 
+            addComment={props.addComment}
+            dishId={props.dish.id}/>
         </div>
     </div>
     </div>
@@ -112,8 +114,9 @@ constructor(props){
           }
 
         handleLogin(values) {
+        this.toggleModal();
         console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
         } 
 
 render(){
@@ -148,9 +151,9 @@ render(){
 
 
              <Row className="form-group">
-                                <Label htmlFor="firstname" md={12}>Your Name</Label>
+                                <Label htmlFor="author" md={12}>Your Name</Label>
                                 <Col md={10}>
-                                    <Control.text model=".firstname" id="firstname" name="firstname"
+                                    <Control.text model=".author" id="author" name="author"
                                         placeholder="Your Name"
                                         className="form-control"
                                         validators={{
@@ -159,7 +162,7 @@ render(){
                                          />
                                     <Errors
                                         className="text-danger"
-                                        model=".firstname"
+                                        model=".author"
                                         show="touched"
                                         messages={{
                                             required: 'Required',
