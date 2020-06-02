@@ -23,7 +23,7 @@ function RenderDish({dish}){
 
 
 
-function RenderComments({comments,addComment, dishId}){  
+function RenderComments({comments,postComment, dishId}){  
 const rencomment = comments.map((info) => 
       
              <ol key={info.id}>
@@ -41,7 +41,7 @@ if(comments != null){
     return(
     <div>
      {rencomment} 
-    <CommentForm dishId={dishId} addComment={addComment}></CommentForm>    
+    <CommentForm dishId={dishId} postComment={postComment}></CommentForm>    
     </div>
    
     )
@@ -92,7 +92,7 @@ return(
         </div>
         <div className="col-12 col-md-5 m-1">
             <RenderComments comments={props.comments} 
-            addComment={props.addComment}
+            postComment={props.postComment}
             dishId={props.dish.id}/>
         </div>
     </div>
@@ -121,7 +121,7 @@ constructor(props){
         isModalOpen: false
       };
     this.toggleModal = this.toggleModal.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
         }
 
 
@@ -131,10 +131,10 @@ constructor(props){
             });
           }
 
-        handleLogin(values) {
+        handleSubmit(values) {
         this.toggleModal();
         console.log('Current State is: ' + JSON.stringify(values));
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
         } 
 
 render(){
@@ -147,7 +147,7 @@ render(){
 <ModalBody>
 
 
-<LocalForm onSubmit={(values) => this.handleLogin(values)}>
+<LocalForm onSubmit={(values) => this.handleSubmit(values)}>
 
 <div className="container">
 
