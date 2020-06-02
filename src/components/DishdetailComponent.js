@@ -1,51 +1,56 @@
-
-//
 import React, {Component} from 'react';
 import { Card, CardImg, CardText, CardBody,
     CardTitle, Breadcrumb, BreadcrumbItem, Button, Modal, ModalHeader, ModalBody,Label, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
-
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
 function RenderDish({dish}){
  return (   
-
+    <FadeTransform
+    in
+    transformProps={{
+        exitTransform: 'scale(0.5) translateY(-50%)'
+    }}>
 <Card key={dish.id}>
     <CardImg width="100%" top src={baseUrl + dish.image} alt={dish.name} />
     <CardTitle>{dish.name}</CardTitle>
     <CardText>{dish.description}</CardText>   
 </Card> 
-
+</FadeTransform>
  )}
 
 
 
 function RenderComments({comments,postComment, dishId}){  
 const rencomment = comments.map((info) => 
-      
+             <Fade in>
              <ol key={info.id}>
              {console.log(info.id)}
              <p>{info.comment}</p>
              <p>-- {info.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(info.date)))}</p>
             </ol>  
-
+            </Fade>   
               
     );
-
-
 if(comments != null){
-    console.log("about to return JSX")    
+    console.log("about to return JSX") 
+  
     return(
+       
     <div>
+   <Stagger in>
      {rencomment} 
-    <CommentForm dishId={dishId} postComment={postComment}></CommentForm>    
-    </div>
+     </Stagger>
+    <CommentForm dishId={dishId} postComment={postComment}></CommentForm>
    
+    </div>
+    
     )
-     
+   
 }
 else{
     return <div></div>;
@@ -233,4 +238,3 @@ render(){
 
 
 export default DishDetail;
-
