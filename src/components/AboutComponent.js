@@ -10,14 +10,16 @@ function About(props) {
     const leaders = props.leaders.leaders.map((leader) => {
         
         return (
+            <div key= {leader.id} >
             <Fade in>
-            <RenderLeader leader = {leader} key={leader.id}/>
+            <RenderLeader leader = {leader} />
            </Fade> 
+            </div>
+            
         );
     });
 
-    function RenderLeader({leader}){
-        
+    function RenderLeader({leader}){  
     return (
         <div key={leader.id} className="col-12 mt-5">
         <Media tag="li">
@@ -32,31 +34,26 @@ function About(props) {
       </div>
     )
     }
-
-
-    if (props.leaders.isLoading) {
-        return(
-            <div className="container">
-                <div className="row">            
-                    <Loading />
-                </div>
-            </div>
-        );
-    }
-    else if (props.leaders.errMess) {
-        return(
-            <div className="container">
-                <div className="row"> 
-                    <div className="col-12">
-                        <h4>{props.leaders.errMess}</h4>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    else
     
- 
+    function displayleaders(){
+        if (props.leaders.isLoading) {
+            return(
+            <Loading /> 
+            );
+        }
+        else if (props.leaders.errMess) {
+            return(
+            <h4>{props.leaders.errMess}</h4>
+            );
+        }
+        else{
+           return leaders
+        }
+    }
+
+
+    
+
     return(
         <div className="container">
             <div className="row">
@@ -114,8 +111,8 @@ function About(props) {
                 <div className="col-12">
                     <Media list>
                     <Stagger in>
-                        {leaders}
-                        </Stagger>
+                        {displayleaders()}
+                    </Stagger>
                     </Media>
                 </div>
             </div>
