@@ -45,6 +45,7 @@ if(comments != null){
    <Stagger in>
      {rencomment} 
      </Stagger>
+     
     <CommentForm dishId={dishId} postComment={postComment}></CommentForm>
    
     </div>
